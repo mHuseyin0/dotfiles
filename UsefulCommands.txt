@@ -1,0 +1,49 @@
+// Compile cpp code (./Executable.out to run)
+g++ Program.cpp -Wall -O2 -o Executable.out
+
+// Starts gnome. If you disabled this service, gnome will not autostart
+systemctl start gdm
+
+// Kill a session with name or number
+tmux kill-session -t 0
+
+// Creates new session named main, if exists attaches to it
+tmux new-session -A -s main
+
+// Opens ventoy plugin server (ventoy directory can be installed from its website)
+cd ventoy-1.0.80/ && sudo bash VentoyPlugson.sh /dev/sdb2
+
+// Get the fastest and up to date repos
+sudo reflector --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+
+// Set volume level
+pactl set-sink-volume @DEFAULT_SINK@ 150%
+
+// Copy text from tmux buffer to the system buffer
+tmux show-buffer | xclip -selection clipboard
+
+// Convert pdf to txt
+pdftotext -layout <filename>
+
+// List pacman packages by size
+expac "%n %m" -l'\n' -Q $(pacman -Qq) | sort -rhk 2 | less
+
+// (Un)comment multiple lines in lunar vim after selecting
+// Comment:
+'<,'>s/^/#/g
+// Uncomment:
+'<,'>s/^#//g
+
+// Find and replace in vim
+:%s/pattern/replace/g
+
+// Do not generate nohup.out
+nohup firefox >/dev/null 2>&1 &
+
+// Use aliases and previous nohup wrapper in scripts
+shopt -s expand_aliases
+source /home/huseyin/.bash_aliases
+
+// Find the package which owns the command
+// (Useful when a command and its psckage name are not the same)
+pacman -Qo <command name>
