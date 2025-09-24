@@ -67,23 +67,18 @@ eval "$(zoxide init bash)"
 #                  huseyin
 ########################################################
 
-export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dsun.java2d.xrender=true"
 QT_QPA_PLATFORM=xcb
 source ~/.bash_aliases
-source ~/.bash_aliases_private
 
 # Java
 export PATH="$PATH:/usr/lib/jvm/java-23-openjdk/bin/"
-
-# Custom scripts
-export PATH="$PATH:~/Documents/Backup/Scripts"
-export PATH="$PATH:~/Documents/Backup/PrivateScripts/"
 
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-fastfetch
+# This is in order to use from distrobox containers
+/home/huseyin/Documents/ClonedPackages/fastfetch/build/fastfetch
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -98,3 +93,4 @@ else
     fi
 fi
 unset __conda_setup
+. "$HOME/.cargo/env"

@@ -47,3 +47,48 @@ source /home/huseyin/.bash_aliases
 // Find the package which owns the command
 // (Useful when a command and its psckage name are not the same)
 pacman -Qo <command name>
+
+#If not running interactively, don't do anything and return early
+[[ $- == *i* ]] || return
+
+// MariaDB create user
+CREATE USER "username"@"localhost" IDENTIFIED BY 'password';
+
+// MariaDB grant all privileges
+GRANT ALL PRIVILEGES ON *.* TO 'username'@localhost IDENTIFIED BY 'password';
+
+// Grant privileges on a db
+GRANT ALL PRIVILEGES ON 'yourDB'.* TO 'username'@localhost;
+
+// Flush
+FLUSH PRIVILEGES;
+
+// Dump
+mariadb-dump --user=admin_backup --password --lock-tables --extended-insert --databases your_database_name > /data/backup/your_database_name.sql
+
+// PostgreSQL
+
+// Create user
+sudo su - postgres
+// then
+createuser --interactive
+// then from psql
+ALTER USER <username> WITH PASSWORD '<password>';
+
+// In psql console
+\COPY <table> TO '/tmp/<out>.csv' CSV HEADER
+
+// In terminal
+pg_dump -U <username (postgres is valid)> -h localhost <database> >> <filename>.sql
+
+// ppt(x) to pdf
+libreoffice --headless --convert-to pdf *.ppt *.pptx --outdir ./pdfs
+
+// Generate ssh key
+ssh-keygen -t ed25519 -C "your_email@example.com"
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+// Then add /home/huseyin/.ssh/id_ed25519.pub to github ssh keys for example
+
+// Set upstream as ssh
+git remote set-url origin git@github.com:username/repo.git
