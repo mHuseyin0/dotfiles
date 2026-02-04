@@ -1,0 +1,158 @@
+{
+        "layer": "top",
+        "position": "top",
+        "mod": "dock",
+        "exclusive": true,
+        "passthrough": false,
+        "gtk-layer-shell": true,
+        "height": 50,
+
+        "modules-left": ["clock",
+                "cpu",
+                //"temperature",
+                "memory",
+                //"custom/energy",
+                "disk",
+        ],
+        //"modules-center": ["hyprland/window"],
+        "modules-center": ["network#wifi"],
+        "modules-right": [
+                "bluetooth",
+                "battery",
+                "backlight",
+                "pulseaudio",
+                "pulseaudio#microphone",
+                "tray"
+        ],
+
+        "hyprland/window": {
+                "format": "{}"
+        },
+
+        "clock": {
+                "format": "  {:%I:%M %p   %a, %b %e}",
+                "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+        },
+
+
+        "cpu": {
+                "format": "  {usage}%",
+                "tooltip": false,
+                "interval": 1
+        },
+
+        "temperature": {
+                "thermal-zone": 6,
+                "format": "  {temperatureC}°C",
+                "critical-threshold": 85,
+                "interval": 1
+        },
+
+        "memory": {
+                "format": "  {used}G",
+                "tooltip": false,
+                "interval": 1
+        },
+
+        "disk": {
+                "format": "  {percentage_used}%",
+                "path": "/",
+                "tooltip": false,
+                "interval": 1
+        },
+
+        "custom/energy": {
+                "format": "⚡ {}",
+                "exec": "sudo /home/huseyin/.local/bin/energy_kwh.sh",
+                "interval": 1,
+                "return-type": "text",
+        },
+
+        "backlight": {
+                "device": "intel_backlight",
+                "format": "{icon} {percent}%",
+                "format-icons": ["󰃞", "󰃟", "󰃠"],
+                "on-scroll-up": "brightnessctl set 1%+",
+                "on-scroll-down": "brightnessctl set 1%-",
+                "min-length": 6
+        },
+
+        "battery": {
+                "states": {
+                        "good": 95,
+                        "warning": 30,
+                        "critical": 20
+                },
+                "format": "{icon} {capacity}%",
+                "format-charging": " {capacity}%",
+                "format-plugged": " {capacity}%",
+                "format-alt": "{time} {icon}",
+                "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+        },
+
+        "pulseaudio": {
+                "format": "{icon} {volume}%",
+                "tooltip": false,
+                "format-muted": " Muted",
+                "on-click": "pamixer -t",
+                "on-scroll-up": "pamixer -i 5",
+                "on-scroll-down": "pamixer -d 5",
+                "scroll-step": 5,
+                "format-icons": {
+                        "headphone": "",
+                        "hands-free": "",
+                        "headset": "",
+                        "phone": "",
+                        "portable": "",
+                        "car": "",
+                        "default": ["", "", ""]
+                }
+        },
+
+        "pulseaudio#microphone": {
+                "format": "{format_source}",
+                "format-source": " {volume}%",
+                "format-source-muted": " Muted",
+                "on-click": "pamixer --default-source -t",
+                "on-scroll-up": "pamixer --default-source -i 5",
+                "on-scroll-down": "pamixer --default-source -d 5",
+                "scroll-step": 5
+        },
+
+        "network": {
+                "format-wifi": "  {signalStrength}%",
+                "on-click": "nm-applet --indicator",
+                "format-ethernet": "{ipaddr}/{cidr}",
+                "tooltip-format": "{essid} - {ifname} via {gwaddr}",
+                "format-linked": "{ifname} (No IP)",
+                "format-disconnected": "Disconnected ⚠",
+                "format-alt": "{ifname}:{essid} {ipaddr}/{cidr}"
+        },
+
+        "bluetooth": {
+                "format": " {status}",
+                "on-click": "blueman-applet",
+                "format-disabled": "",
+                "format-connected": " {num_connections}",
+                "tooltip-format": "{device_alias}",
+                "tooltip-format-connected": " {device_enumerate}",
+                "tooltip-format-enumerate-connected": "{device_alias}"
+        },
+
+
+        "network#wifi": {
+                "interval": 1,
+                "format": "{ifname}",
+                "format-wifi": "{icon}  {bandwidthDownBytes}  {bandwidthUpBytes} ",
+                "format-ethernet": "{icon}  {bandwidthDownBytes}  {bandwidthUpBytes} ",
+                "format-disconnected": "󰌙",
+                "tooltip-format": "{ipaddr}",
+                "format-linked": "󰈁 {ifname} (No IP)",
+                "tooltip-format-wifi": "{essid} {icon} {signalStrength}%",
+                "tooltip-format-ethernet": "{ifname} 󰌘",
+                "tooltip-format-disconnected": "󰌙 Disconnected",
+                "max-length": 30,
+                "format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"]
+        },
+}
+

@@ -81,6 +81,12 @@ ALTER USER <username> WITH PASSWORD '<password>';
 // In terminal
 pg_dump -U <username (postgres is valid)> -h localhost <database> >> <filename>.sql
 
+// Export csv
+\COPY my_table TO 'filename' CSV HEADER
+
+// Pretty output
+\pset format wrapped
+
 // ppt(x) to pdf
 libreoffice --headless --convert-to pdf *.ppt *.pptx --outdir ./pdfs
 
@@ -92,3 +98,15 @@ ssh-add ~/.ssh/id_ed25519
 
 // Set upstream as ssh
 git remote set-url origin git@github.com:username/repo.git
+
+// Select audio devices
+pavucontrol
+
+// Checkout to a remote branch
+git checkout -b remotes/origin/...
+
+// Create a venv named "rai" with python 3.12
+uv venv rai --python 3.12
+
+// Add new packages (pip can be installed as well)
+uv pip install robotic numpy
