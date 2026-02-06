@@ -1,0 +1,71 @@
+#!/bin/bash
+
+tmp_dir="/tmp/cliphist_thumbs"
+mkdir -p "$tmp_dir"
+
+case "$1" in
+    d) # Delete mode
+        row=0
+        while true; do
+            # Get the list and the selection, starting at the last known row
+            # -format 'f' returns the index (0-based) of the selected item
+
+            selection=$(cliphist list | while read -r line; do
+            # Extract just the ID (number)
+            id=$(echo "$line" | awk '{print $1}')
+
+            if [[ "$line" == *"[[ binary data"* ]]; then
+                thumb="$tmp_dir/${id}.png"
+                # Decode image to thumb if not already cached
+                if [ ! -f "$thumb" ]; then
+                    cliphist decode "$id" > "$thumb" 2>/dev/null
+                fi
+                echo -en "$line\0icon\x1f$thumb\n"
+            else
+                echo -en "$line\n"
+            fi
+            done | rofi -dmenu -p "Delete Mode" -format 'i:s' -selected-row "$row" -config ~/.config/rofi/clipboard.rasi)
+
+            # Exit if user presses Esc
+            exit_code=$?
+            if [ $exit_code -ne 0 ]; then
+                break
+            fi
+
+            # Split the index and the content
+            row=$(echo "$selection" | cut -d':' -f1)
+            item=$(echo "$selection" | cut -d':' -f2-)
+
+            if [ -n "$item" ]; then
+                echo "$item" | cliphist delete
+
+                # Optional: If you delete the very last item,
+                # you might want to decrement row so it doesn't overflow.
+                # But Rofi usually handles an out-of-bounds index by going to the end.
+            else
+                break
+            fi
+        done
+        ;;
+    *) # Select mode
+        result=$(cliphist list | while read -r line; do
+        # Extract just the ID (number)
+        id=$(echo "$line" | awk '{print $1}')
+
+        if [[ "$line" == *"[[ binary data"* ]]; then
+            thumb="$tmp_dir/${id}.png"
+            # Decode image to thumb if not already cached
+            if [ ! -f "$thumb" ]; then
+                cliphist decode "$id" > "$thumb" 2>/dev/null
+            fi
+            echo -en "$line\0icon\x1f$thumb\n"
+        else
+            echo -en "$line\n"
+        fi
+    done | rofi -dmenu -i -p "📋 Clipboard" -config ~/.config/rofi/clipboard.rasi)
+
+    if [ -n "$result" ]; then
+        echo "$result" | cliphist decode | wl-copy
+    fi
+    ;;
+esac

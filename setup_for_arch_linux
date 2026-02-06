@@ -17,4 +17,12 @@ nwg-look-bin nordic-theme papirus-icon-theme dunst otf-sora   \
 ttf-nerd-fonts-symbols-common otf-firamono-nerd inter-font    \
 ttf-fantasque-nerd noto-fonts noto-fonts-emoji ttf-comfortaa  \
 ttf-jetbrains-mono-nerd ttf-icomoon-feather ttf-iosevka-nerd  \
-adobe-source-code-pro-fonts bat
+adobe-source-code-pro-fonts bat cliphist
+
+mkdir -p "~/.local/bin/"
+mv cliphist-rofi ~/.local/bin/
+
+mv .bash_aliases  .bashrc  .tmux.conf  .vimrc ~
+
+mkdir -p "~/.config"
+mv fastfetch hypr kitty mako rofi wofi swaylock waybar starship.toml ~/.config

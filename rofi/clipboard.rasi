@@ -1,0 +1,31 @@
+configuration {
+    modi: "dmenu";
+    show-icons: true;
+    display-dmenu: "📋";
+}
+
+@theme "~/.config/rofi/launchers/type-1/style-1.rasi"
+
+window {
+    width: 800px;
+    height: 900px;
+}
+
+listview {
+    fixed-height: false;
+    dynamic: true;
+}
+
+element {
+    orientation: horizontal;
+    padding: 3px;
+    spacing: 3px;
+}
+
+element-icon {
+    size: 120px;
+}
+
+element-text {
+    vertical-align: 0.5;
+}
