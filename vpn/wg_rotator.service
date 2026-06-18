@@ -1,0 +1,15 @@
+# /etc/systemd/system/wg-rotator.service
+[Unit]
+Description=WireGuard VPN Rotator
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/wg-rotator.sh
+ExecStop=/usr/bin/bash -c 'for iface in $(wg show interfaces); do wg-quick down "/etc/wireguard/rotate/$iface.conf"; done'
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
